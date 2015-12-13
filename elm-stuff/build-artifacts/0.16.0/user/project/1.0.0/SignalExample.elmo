@@ -1,0 +1,33 @@
+Elm.SignalExample = Elm.SignalExample || {};
+Elm.SignalExample.make = function (_elm) {
+   "use strict";
+   _elm.SignalExample = _elm.SignalExample || {};
+   if (_elm.SignalExample.values) return _elm.SignalExample.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Http = Elm.Http.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Task = Elm.Task.make(_elm);
+   var _op = {};
+   var readmeUrl = "https://raw.githubusercontent.com/elm-lang/core/master/README.md";
+   var readme = $Signal.mailbox("");
+   var report = function (markdown) {
+      return A2($Signal.send,readme.address,markdown);
+   };
+   var fetchReadme = Elm.Native.Task.make(_elm).perform(A2($Task.andThen,
+   $Http.getString(readmeUrl),
+   report));
+   var main = A2($Html.div,
+   _U.list([]),
+   _U.list([$Html.text("xsdsfdsfdsfsfsfd")]));
+   return _elm.SignalExample.values = {_op: _op
+                                      ,main: main
+                                      ,readme: readme
+                                      ,report: report
+                                      ,readmeUrl: readmeUrl};
+};

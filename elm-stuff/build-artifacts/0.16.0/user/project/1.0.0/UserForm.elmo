@@ -1,0 +1,50 @@
+Elm.UserForm = Elm.UserForm || {};
+Elm.UserForm.make = function (_elm) {
+   "use strict";
+   _elm.UserForm = _elm.UserForm || {};
+   if (_elm.UserForm.values) return _elm.UserForm.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $GenericElement = Elm.GenericElement.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var userFormStyle = $Html$Attributes.style(_U.list([{ctor: "_Tuple2"
+                                                       ,_0: "text-align"
+                                                       ,_1: "center"}]));
+   var userTable = A2($Html.table,
+   _U.list([]),
+   _U.list([A2($Html.thead,
+           _U.list([]),
+           _U.list([A2($Html.th,
+           _U.list([]),
+           _U.list([$Html.text("XXX")]))]))
+           ,A2($Html.tbody,
+           _U.list([]),
+           _U.list([A2($Html.tr,
+           _U.list([]),
+           _U.list([A2($Html.td,
+           _U.list([]),
+           _U.list([$Html.text("XXXXXXX")]))]))]))]));
+   var submitButton = A2($Html.button,
+   _U.list([$GenericElement.inputStyle]),
+   _U.list([$Html.text("Add")]));
+   var main = A2($Html.body,
+   _U.list([userFormStyle]),
+   _U.list([$GenericElement.sectionTitle("User Form")
+           ,$GenericElement.genericInput("Name")
+           ,$GenericElement.genericInput("Age")
+           ,submitButton
+           ,$GenericElement.sectionTitle("Users")
+           ,userTable]));
+   return _elm.UserForm.values = {_op: _op
+                                 ,submitButton: submitButton
+                                 ,userTable: userTable
+                                 ,main: main
+                                 ,userFormStyle: userFormStyle};
+};

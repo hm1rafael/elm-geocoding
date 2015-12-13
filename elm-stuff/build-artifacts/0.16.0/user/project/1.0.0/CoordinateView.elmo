@@ -1,0 +1,78 @@
+Elm.CoordinateView = Elm.CoordinateView || {};
+Elm.CoordinateView.make = function (_elm) {
+   "use strict";
+   _elm.CoordinateView = _elm.CoordinateView || {};
+   if (_elm.CoordinateView.values)
+   return _elm.CoordinateView.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Coordinate = Elm.Coordinate.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var query = $Signal.mailbox($Coordinate.init);
+   var actions = $Signal.mailbox($Coordinate.NoOp);
+   var view = function (model) {
+      var div$ = function (address) {
+         return A2($Html.div,
+         _U.list([]),
+         _U.list([$Html.text(address)]));
+      };
+      var addressElement = function () {
+         var _p0 = model.addresses;
+         if (_p0.ctor === "Err") {
+               return A2($Html.div,
+               _U.list([]),
+               _U.list([$Html.text(_p0._0)]));
+            } else {
+               return A2($Html.div,_U.list([]),A2($List.map,div$,_p0._0));
+            }
+      }();
+      return A2($Html.div,
+      _U.list([]),
+      _U.list([A2($Html.input,
+              _U.list([$Html$Attributes.type$("String")
+                      ,$Html$Attributes.placeholder("latitude")
+                      ,A3($Html$Events.on,
+                      "input",
+                      $Html$Events.targetValue,
+                      function (latitude) {
+                         return A2($Signal.message,
+                         actions.address,
+                         $Coordinate.SetLatitude(latitude));
+                      })]),
+              _U.list([]))
+              ,A2($Html.input,
+              _U.list([$Html$Attributes.type$("String")
+                      ,$Html$Attributes.placeholder("longitude")
+                      ,A3($Html$Events.on,
+                      "input",
+                      $Html$Events.targetValue,
+                      function (longitude) {
+                         return A2($Signal.message,
+                         actions.address,
+                         $Coordinate.SetLongitude(longitude));
+                      })]),
+              _U.list([]))
+              ,A2($Html.button,
+              _U.list([A2($Html$Events.onClick,query.address,model)]),
+              _U.list([$Html.text("Search")]))
+              ,addressElement]));
+   };
+   var div$ = function (address) {
+      return A2($Html.div,
+      _U.list([]),
+      _U.list([$Html.text(address)]));
+   };
+   return _elm.CoordinateView.values = {_op: _op
+                                       ,div$: div$
+                                       ,view: view
+                                       ,actions: actions
+                                       ,query: query};
+};

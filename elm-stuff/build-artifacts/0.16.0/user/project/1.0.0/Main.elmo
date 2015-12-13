@@ -1,0 +1,39 @@
+Elm.Main = Elm.Main || {};
+Elm.Main.make = function (_elm) {
+   "use strict";
+   _elm.Main = _elm.Main || {};
+   if (_elm.Main.values) return _elm.Main.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Coordinate = Elm.Coordinate.make(_elm),
+   $CoordinateView = Elm.CoordinateView.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Http = Elm.Http.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Task = Elm.Task.make(_elm);
+   var _op = {};
+   var request = Elm.Native.Task.make(_elm).performSignal("request",
+   A2($Signal.map,
+   function (task) {
+      return A2($Task.andThen,
+      $Task.toResult(task),
+      function (_p0) {
+         return A2($Signal.send,
+         $CoordinateView.actions.address,
+         $Coordinate.UpdateAddresses(_p0));
+      });
+   },
+   A2($Signal.map,
+   $Coordinate.getAddresses,
+   $CoordinateView.query.signal)));
+   var model = A3($Signal.foldp,
+   $Coordinate.update,
+   $Coordinate.init,
+   $CoordinateView.actions.signal);
+   var main = A2($Signal.map,$CoordinateView.view,model);
+   return _elm.Main.values = {_op: _op,model: model,main: main};
+};

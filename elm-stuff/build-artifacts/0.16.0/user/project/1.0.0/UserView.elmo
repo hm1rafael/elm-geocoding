@@ -1,0 +1,69 @@
+Elm.UserView = Elm.UserView || {};
+Elm.UserView.make = function (_elm) {
+   "use strict";
+   _elm.UserView = _elm.UserView || {};
+   if (_elm.UserView.values) return _elm.UserView.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var view = F2(function (actionDispatcher,model) {
+      return A2($Html.form,
+      _U.list([$Html$Attributes.id("signup-form")]),
+      _U.list([A2($Html.h1,
+              _U.list([]),
+              _U.list([$Html.text("Sensational Signup Form")]))
+              ,A2($Html.label,
+              _U.list([$Html$Attributes.$for("username-field")]),
+              _U.list([$Html.text("username: ")]))
+              ,A2($Html.input,
+              _U.list([$Html$Attributes.id("username-field")
+                      ,$Html$Attributes.type$("text")
+                      ,$Html$Attributes.value(model.username)
+                      ,A3($Html$Events.on,
+                      "input",
+                      $Html$Events.targetValue,
+                      function (str) {
+                         return A2($Signal.message,
+                         actionDispatcher,
+                         {actionType: "SET_USERNAME",payload: str});
+                      })]),
+              _U.list([]))
+              ,A2($Html.div,
+              _U.list([$Html$Attributes.$class("validation-error")]),
+              _U.list([$Html.text(model.errors.username)]))
+              ,A2($Html.label,
+              _U.list([$Html$Attributes.$for("password")]),
+              _U.list([$Html.text("password: ")]))
+              ,A2($Html.input,
+              _U.list([$Html$Attributes.id("password-field")
+                      ,$Html$Attributes.type$("password")
+                      ,$Html$Attributes.value(model.password)
+                      ,A3($Html$Events.on,
+                      "input",
+                      $Html$Events.targetValue,
+                      function (str) {
+                         return A2($Signal.message,
+                         actionDispatcher,
+                         {actionType: "SET_PASSWORD",payload: str});
+                      })]),
+              _U.list([]))
+              ,A2($Html.div,
+              _U.list([$Html$Attributes.$class("validation-error")]),
+              _U.list([$Html.text(model.errors.password)]))
+              ,A2($Html.div,
+              _U.list([$Html$Attributes.$class("signup-button")
+                      ,A2($Html$Events.onClick,
+                      actionDispatcher,
+                      {actionType: "VALIDATE",payload: ""})]),
+              _U.list([$Html.text("Sign Up!")]))]));
+   });
+   return _elm.UserView.values = {_op: _op,view: view};
+};

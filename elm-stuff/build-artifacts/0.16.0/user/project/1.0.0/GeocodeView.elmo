@@ -1,0 +1,76 @@
+Elm.GeocodeView = Elm.GeocodeView || {};
+Elm.GeocodeView.make = function (_elm) {
+   "use strict";
+   _elm.GeocodeView = _elm.GeocodeView || {};
+   if (_elm.GeocodeView.values) return _elm.GeocodeView.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $CoordinatesModel = Elm.CoordinatesModel.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var inputStyle = $Html$Attributes.style(_U.list([{ctor: "_Tuple2"
+                                                    ,_0: "width"
+                                                    ,_1: "100%"}
+                                                   ,{ctor: "_Tuple2",_0: "height",_1: "40px"}
+                                                   ,{ctor: "_Tuple2",_0: "font-size",_1: "2em"}
+                                                   ,{ctor: "_Tuple2",_0: "text-align",_1: "center"}]));
+   var view = F2(function (action,coordinate) {
+      return A2($Html.div,
+      _U.list([]),
+      _U.list([A2($Html.input,
+              _U.list([$Html$Attributes.placeholder("Latitude")
+                      ,$Html$Attributes.type$("text")
+                      ,$Html$Attributes.value(coordinate.latitude)
+                      ,A3($Html$Events.on,
+                      "input",
+                      $Html$Events.targetValue,
+                      function (str) {
+                         return A2($Signal.message,
+                         action,
+                         $CoordinatesModel.UpdateLatitude(str));
+                      })
+                      ,inputStyle]),
+              _U.list([]))
+              ,A2($Html.input,
+              _U.list([$Html$Attributes.placeholder("Longitude")
+                      ,$Html$Attributes.type$("text")
+                      ,$Html$Attributes.value(coordinate.longitude)
+                      ,A3($Html$Events.on,
+                      "input",
+                      $Html$Events.targetValue,
+                      function (str) {
+                         return A2($Signal.message,
+                         action,
+                         $CoordinatesModel.UpdateLongitude(str));
+                      })
+                      ,inputStyle]),
+              _U.list([]))
+              ,A2($Html.div,
+              _U.list([$Html$Attributes.style(_U.list([{ctor: "_Tuple2"
+                                                       ,_0: "cursor"
+                                                       ,_1: "pointer"}
+                                                      ,{ctor: "_Tuple2",_0: "width",_1: "100%"}
+                                                      ,{ctor: "_Tuple2",_0: "height",_1: "40px"}
+                                                      ,{ctor: "_Tuple2",_0: "font-size",_1: "2em"}
+                                                      ,{ctor: "_Tuple2",_0: "text-align",_1: "center"}
+                                                      ,{ctor: "_Tuple2"
+                                                       ,_0: "background-color"
+                                                       ,_1: "rgb(220, 220, 220)"}
+                                                      ,{ctor: "_Tuple2",_0: "border-style",_1: "solid"}
+                                                      ,{ctor: "_Tuple2",_0: "border-width",_1: "1px"}]))
+                      ,A2($Html$Events.onClick,
+                      $CoordinatesModel.queryAddresses.address,
+                      coordinate)]),
+              _U.list([$Html.text("Search!!!")]))]));
+   });
+   return _elm.GeocodeView.values = {_op: _op
+                                    ,view: view
+                                    ,inputStyle: inputStyle};
+};

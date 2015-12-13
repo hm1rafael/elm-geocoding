@@ -1,0 +1,43 @@
+Elm.UserModel = Elm.UserModel || {};
+Elm.UserModel.make = function (_elm) {
+   "use strict";
+   _elm.UserModel = _elm.UserModel || {};
+   if (_elm.UserModel.values) return _elm.UserModel.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Effects = Elm.Effects.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var getErrors = function (model) {
+      return {username: _U.eq(model.username,
+             "") ? "Please enter a user name" : ""
+             ,password: _U.eq(model.password,
+             "") ? "Please enter a password" : ""};
+   };
+   var update = F2(function (action,model) {
+      return _U.eq(action.actionType,"VALIDATE") ? {ctor: "_Tuple2"
+                                                   ,_0: _U.update(model,{errors: getErrors(model)})
+                                                   ,_1: $Effects.none} : _U.eq(action.actionType,
+      "SET_USERNAME") ? {ctor: "_Tuple2"
+                        ,_0: _U.update(model,{username: action.payload})
+                        ,_1: $Effects.none} : _U.eq(action.actionType,
+      "SET_PASSWORD") ? {ctor: "_Tuple2"
+                        ,_0: _U.update(model,{password: action.payload})
+                        ,_1: $Effects.none} : {ctor: "_Tuple2"
+                                              ,_0: model
+                                              ,_1: $Effects.none};
+   });
+   var initialErrors = {username: "",password: ""};
+   var initialModel = {username: ""
+                      ,password: ""
+                      ,errors: initialErrors};
+   return _elm.UserModel.values = {_op: _op
+                                  ,initialErrors: initialErrors
+                                  ,initialModel: initialModel
+                                  ,getErrors: getErrors
+                                  ,update: update};
+};

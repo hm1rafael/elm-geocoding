@@ -1,0 +1,45 @@
+Elm.GenericElement = Elm.GenericElement || {};
+Elm.GenericElement.make = function (_elm) {
+   "use strict";
+   _elm.GenericElement = _elm.GenericElement || {};
+   if (_elm.GenericElement.values)
+   return _elm.GenericElement.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var titleStyle = $Html$Attributes.style(_U.list([{ctor: "_Tuple2"
+                                                    ,_0: "width"
+                                                    ,_1: "100%"}
+                                                   ,{ctor: "_Tuple2",_0: "height",_1: "60px"}
+                                                   ,{ctor: "_Tuple2",_0: "font-size",_1: "4em"}
+                                                   ,{ctor: "_Tuple2",_0: "text-align",_1: "center"}]));
+   var inputStyle = $Html$Attributes.style(_U.list([{ctor: "_Tuple2"
+                                                    ,_0: "width"
+                                                    ,_1: "80%"}
+                                                   ,{ctor: "_Tuple2",_0: "height",_1: "40px"}
+                                                   ,{ctor: "_Tuple2",_0: "font-size",_1: "2em"}
+                                                   ,{ctor: "_Tuple2",_0: "text-align",_1: "center"}
+                                                   ,{ctor: "_Tuple2",_0: "margin",_1: "2px"}]));
+   var genericInput = function (placeHolder) {
+      return A2($Html.input,
+      _U.list([$Html$Attributes.placeholder(placeHolder),inputStyle]),
+      _U.list([]));
+   };
+   var sectionTitle = function (title) {
+      return A2($Html.h1,
+      _U.list([titleStyle]),
+      _U.list([$Html.text(title)]));
+   };
+   return _elm.GenericElement.values = {_op: _op
+                                       ,sectionTitle: sectionTitle
+                                       ,genericInput: genericInput
+                                       ,inputStyle: inputStyle
+                                       ,titleStyle: titleStyle};
+};

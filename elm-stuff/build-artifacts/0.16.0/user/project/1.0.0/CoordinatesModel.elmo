@@ -1,0 +1,81 @@
+Elm.CoordinatesModel = Elm.CoordinatesModel || {};
+Elm.CoordinatesModel.make = function (_elm) {
+   "use strict";
+   _elm.CoordinatesModel = _elm.CoordinatesModel || {};
+   if (_elm.CoordinatesModel.values)
+   return _elm.CoordinatesModel.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Http = Elm.Http.make(_elm),
+   $Json$Decode = Elm.Json.Decode.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $String = Elm.String.make(_elm),
+   $Task = Elm.Task.make(_elm);
+   var _op = {};
+   var update = F2(function (action,coordinates) {
+      var addresses = A2($Debug.log,
+      "addresses",
+      coordinates.addresses);
+      var longitude = A2($Debug.log,
+      "longitude",
+      coordinates.longitude);
+      var latitude = A2($Debug.log,"latitude",coordinates.latitude);
+      var _p0 = action;
+      switch (_p0.ctor)
+      {case "NoOp": return coordinates;
+         case "UpdateLatitude": return _U.update(coordinates,
+           {latitude: _p0._0});
+         case "UpdateLongitude": return _U.update(coordinates,
+           {longitude: _p0._0});
+         default: return _U.update(coordinates,{addresses: _p0._0});}
+   });
+   var SetAddresses = function (a) {
+      return {ctor: "SetAddresses",_0: a};
+   };
+   var UpdateLongitude = function (a) {
+      return {ctor: "UpdateLongitude",_0: a};
+   };
+   var UpdateLatitude = function (a) {
+      return {ctor: "UpdateLatitude",_0: a};
+   };
+   var NoOp = {ctor: "NoOp"};
+   var actions = $Signal.mailbox(NoOp);
+   var referenceAddress = A2($Json$Decode.object1,
+   $Basics.toString,
+   A2($Json$Decode._op[":="],
+   "formatted_address",
+   $Json$Decode.string));
+   var getAddresses = function (coordinates) {
+      var urlString = $String.concat(_U.list(["https://maps.googleapis.com/maps/api/geocode/json?latlng="
+                                             ,coordinates.latitude
+                                             ,","
+                                             ,coordinates.longitude
+                                             ,"&key=AIzaSyD1fgtZPKk5gdcy6MZjVLySMAQlNiatO1g"]));
+      return A2($Http.get,
+      $Json$Decode.list(referenceAddress),
+      urlString);
+   };
+   var initModel = {latitude: ""
+                   ,longitude: ""
+                   ,addresses: _U.list([])};
+   var query = $Signal.mailbox(initModel);
+   var Coordinates = F3(function (a,b,c) {
+      return {latitude: a,longitude: b,addresses: c};
+   });
+   return _elm.CoordinatesModel.values = {_op: _op
+                                         ,Coordinates: Coordinates
+                                         ,initModel: initModel
+                                         ,referenceAddress: referenceAddress
+                                         ,getAddresses: getAddresses
+                                         ,query: query
+                                         ,actions: actions
+                                         ,NoOp: NoOp
+                                         ,UpdateLatitude: UpdateLatitude
+                                         ,UpdateLongitude: UpdateLongitude
+                                         ,SetAddresses: SetAddresses
+                                         ,update: update};
+};
